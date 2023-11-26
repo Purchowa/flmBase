@@ -1,25 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './styles/theme.css';
+import './styles/style.css';
+import { Container } from 'react-bootstrap';
+import { useState } from 'react';
+import Home from './components/Screens/Home';
+import SignIn from './components/Screens/SignIn';
+import MovieDetails from './components/Screens/MovieDetails';
 
 function App() {
+  enum AppState{
+    Guest,
+    User,
+    SignIn,
+    SignUp,
+    MovieDetails
+  }
+
+  const [appState, setAppState] = useState(AppState.MovieDetails);
+
+  let component: JSX.Element;
+  switch (appState){
+    case AppState.Guest:{
+      component = <Home/>;
+      break;
+    }
+    case AppState.SignIn:{
+      component = <SignIn/>;
+      break;
+    }
+    case AppState.SignUp:{
+      component = <SignIn/>;
+      break;
+    }
+    case AppState.MovieDetails:{
+      component = <MovieDetails/>
+      break;
+    }
+    default:{
+      component = <Home/>;
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container fluid className='background p-0 m-0 min-vh-100'>
+      {component}
+    </Container>
   );
 }
 

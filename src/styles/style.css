@@ -1,0 +1,65 @@
+.searchBarBackgroundImg{
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-attachment: scroll;
+    background-size: 100%;
+}
+
+.main-title{
+    font-weight: 700;
+    font-size: 66px;
+    line-height: 80px;
+    color: #eaf2fb;
+    text-align: center;
+}
+
+.uppercase{
+   text-transform: uppercase; 
+}
+
+.gradientText{
+    background: linear-gradient(84deg, #29abe2 0%, #8e98df 25%, #cda9e8 48.44%, #f2bbb7 72.92%, #fffb93 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.movieGroup{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.movie{
+    max-width: 200px;
+}
+
+.movie img{
+    border: 2px solid;
+}
+
+.movie img:hover{
+    border-style: solid;
+    border-width: 2px;
+    border-image-slice: 1;
+    border-image-source: linear-gradient(to left, #743ad5, #d53a9d);
+    
+}
+
+.movieTitle{
+    color: white;
+    text-align: center;
+}
+
+.clickableLink{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.movieDescList{
+    list-style-type: none;
+    padding: 0;
+    color: gray;
+}
