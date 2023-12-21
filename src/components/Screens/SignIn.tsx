@@ -1,6 +1,7 @@
 import NavBar from "../NavBar/NavBar";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
+import { Link } from "react-router-dom";
 
 export default function SignIn() {
 
@@ -14,25 +15,24 @@ export default function SignIn() {
             <Form>
                 <Row className="m-3 justify-content-center">
                     <Col xs='7'>
-                        <Form.Control type="email" placeholder="Email" />
+                            <Form.Control type="text" placeholder="Login" />
                     </Col>
                 </Row>
                 <Row className="m-3 justify-content-center">
                     <Col xs='7'>
-                        <Form.Control type="password" placeholder="Hasło" />
+                            <Form.Control type="password" placeholder="Hasło" />
                     </Col>
                 </Row>
                 <Row className="m-3 justify-content-center">
                     <Col xs='auto'>
-                        <Button variant="warning" type="submit" placeholder="Hasło">Zaloguj</Button>
+                            <Button variant="warning" type="submit">Dołącz</Button>
                     </Col>
                 </Row>
             </Form>
         </Container>
         <Row className="m-3 justify-content-center text-light text-center">
-            <p>Nie masz konta? <a className="clickableLink">Załóż</a></p>
-        </Row>
-        
+                <p>Nie masz konta? <Link to="/sign_up" className="clickableLink">Załóż</Link></p>
+            </Row>
     </div>
             
     );
