@@ -3,6 +3,7 @@ import './styles/theme.css';
 import './styles/style.css';
 import { Container } from 'react-bootstrap';
 import {
+  createBrowserRouter,
   BrowserRouter,
   Routes,
   Route,
@@ -11,7 +12,7 @@ import {
 import { isExpired } from 'react-jwt';
 import Home from './components/Screens/Home';
 import SignIn from './components/Screens/SignIn';
-import MovieDetails from './components/Screens/MovieDetails';
+import { MovieDetails } from './components/Screens/MovieDetails';
 import SignUp from './components/Screens/SignUp';
 import AddMovie from './components/Screens/AddMovie';
 import getUserToken from './utils/getUserToken';

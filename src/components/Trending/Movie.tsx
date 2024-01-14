@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
+import { MovieHeaderData } from "../Types/MovieDataTypes";
 
-export default function Movie(){
-
-    
+export default function Movie({ prop }: { prop: MovieHeaderData }) {
     return(
-        <Link to="/movie_details" className="bg-image movie">
-            <img className='img-fluid' src='https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp' alt='picture'/>
-            <h4 className='movieTitle'>Title</h4>
+        <Link to={`/${prop.id}`} className="bg-image movie text-decoration-none">
+            <img className='img-fluid' src={prop.image} alt='picture' />
+            <h4 className='movieTitle'>{prop.title}</h4>
         </Link>
     );
 }
