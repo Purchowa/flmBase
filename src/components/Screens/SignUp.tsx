@@ -20,19 +20,20 @@ export default function SignUp() {
         if (form.checkValidity() === false) {
             event.stopPropagation();
         }
+        else {
+            const registerData: RegisterForm = {
+                name: event.target.name.value,
+                email: event.target.email.value,
+                password: event.target.password.value
+            };
 
-        const registerData: RegisterForm = {
-            name: event.target.name.value,
-            email: event.target.email.value,
-            password: event.target.password.value
-        };
-
-        registerUser(registerData).then(() => {
-            navigate(signInPath);
-        }).catch((error: Error) => {
-            setFalseCredintials(true);
-            setRegisterErrorMsg(error.message);
-        })
+            registerUser(registerData).then(() => {
+                navigate(signInPath);
+            }).catch((error: Error) => {
+                setFalseCredintials(true);
+                setRegisterErrorMsg(error.message);
+            })
+        }
 
         event.preventDefault();
         setValidated(true);
