@@ -2,19 +2,22 @@ import { useState } from 'react'
 import NavBar from "../NavBar/NavBar";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
-import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
+import { registerUser } from '../../api/userDataApi';
 import { RegisterForm } from '../Types/UserDataTypes';
 import { signInPath } from '../../strings/AppPaths';
 
+
 export default function SignUp() {
     const [validated, setValidated] = useState(false);
+    const [falseCredintials, setFalseCredintials] = useState(false);
+    const [registerErrorMsg, setRegisterErrorMsg] = useState('');
+
     const navigate = useNavigate();
 
     const handleSubmit = (event: any) => {
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
-            event.preventDefault();
             event.stopPropagation();
         }
 
@@ -24,20 +27,14 @@ export default function SignUp() {
             password: event.target.password.value
         };
 
-        axios({
-            method: 'post',
-            url: 'https://at.usermd.net/api/user/create',
-            data: registerData
-        }).then(
-            (response) => {
-                navigate(signInPath);
-            }
-        ).catch(
-            (errors) => {
-                console.error(errors);
-            }
-        );
+        registerUser(registerData).then(() => {
+            navigate(signInPath);
+        }).catch((error: Error) => {
+            setFalseCredintials(true);
+            setRegisterErrorMsg(error.message);
+        })
 
+        event.preventDefault();
         setValidated(true);
     };
 
@@ -67,6 +64,11 @@ export default function SignUp() {
                             <Form.Control.Feedback type='invalid'>Hasło jest wymagane!</Form.Control.Feedback>
                         </Col>
                     </Row>
+                    {falseCredintials ? <Row className="m-3 justify-content-center">
+                        <Col xs='auto'>
+                            <p className='text-danger'>{registerErrorMsg}</p>
+                        </Col>
+                    </Row> : null}
                     <Row className="m-3 justify-content-center">
                         <Col xs='auto'>
                             <Button variant="warning" type="submit">Zarejestruj</Button>

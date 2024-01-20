@@ -1,6 +1,6 @@
 # Movie base
 Front-end app using react with typescript.
-Styling done with help of bootstrap.
+Styling done with help of bootstrap and react-boostrap.
 
 ## Getting Started with Create React App
 

@@ -4,7 +4,8 @@ export type MovieData = {
     content: string,
     rate: number,
     genre: string,
-    productionYear: number
+    productionYear: number,
+    id: string
 }
 
 export type MovieHeaderData = {

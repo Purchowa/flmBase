@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
 import { MovieData } from "../Types/MovieDataTypes";
 import { homePath } from "../../strings/AppPaths";
+import { postMovie } from "../../api/movieDataApi";
 
 export default function AddMovie() {
     const [validated, setValidated] = useState(false);
@@ -27,25 +27,14 @@ export default function AddMovie() {
                 content: event.target.content.value,
                 genre: event.target.genre.value,
                 productionYear: event.target.productionYear.value,
-                rate: event.target.rate.value
+                rate: event.target.rate.value,
+                id: ""
             }
 
-            console.log(movieData);
-
-            axios({
-                method: 'post',
-                url: 'https://at.usermd.net/api/movies',
-                data: movieData
-            }).then(
-                (response) => {
-                    navigate(homePath);
-                    refreshPage();
-                }
-            ).catch(
-                (e) => {
-                    console.error(e);
-                }
-            );
+            postMovie(movieData).then(() => {
+                navigate(homePath);
+                refreshPage();
+            })
         }
 
         event.preventDefault();
@@ -63,37 +52,37 @@ export default function AddMovie() {
                     <Row className="m-3 justify-content-center">
                         <Col xs='8'>
                             <Form.Label className="text-white h5">Tytuł</Form.Label>
-                            <Form.Control name='title' type="text" />
+                            <Form.Control required name='title' type="text" />
                         </Col>
                     </Row>
                     <Row className="m-3 justify-content-center">
                         <Col xs='8'>
                             <Form.Label className="text-white h5">Okładka</Form.Label>
-                            <Form.Control name='image' type="text" placeholder="https://exmaple.jpg" />
+                            <Form.Control required name='image' type="text" placeholder="https://exmaple.jpg" />
                         </Col>
                     </Row>
                     <Row className="m-3 justify-content-center">
                         <Col xs='8'>
                             <Form.Label className="text-white h5">Opis</Form.Label>
-                            <Form.Control name='content' as="textarea" rows={3} />
+                            <Form.Control required name='content' as="textarea" rows={3} />
                         </Col>
                     </Row>
                     <Row className="m-3 justify-content-center">
                         <Col xs='8'>
                             <Form.Label className="text-white h5">Gatunek</Form.Label>
-                            <Form.Control name='genre' type="text" placeholder="Horror" />
+                            <Form.Control required name='genre' type="text" placeholder="Horror" />
                         </Col>
                     </Row>
                     <Row className="m-3 justify-content-center">
                         <Col xs='8'>
                             <Form.Label className="text-white h5">Rok produkcji</Form.Label>
-                            <Form.Control name='productionYear' type="text" />
+                            <Form.Control required name='productionYear' type="text" />
                         </Col>
                     </Row>
                     <Row className="m-3 justify-content-center">
                         <Col xs='8'>
                             <Form.Label className="text-white h5">Ocena</Form.Label>
-                            <Form.Control name='rate' type="number" />
+                            <Form.Control required name='rate' type="text" />
                         </Col>
                     </Row>
                     <Row className="m-3 justify-content-center">

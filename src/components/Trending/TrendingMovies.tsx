@@ -1,32 +1,33 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { MovieHeaderData } from "../Types/MovieDataTypes";
 import Movie from "./Movie";
+import { SearchType } from "../Types/SearchTypes";
+import filterMovies from "../FilterMovies/filterMovies";
+import { getMovieCollection } from "../../api/movieDataApi";
 
-
-export default function TrendingMovies(){
-    const [movies, setMovies] = useState<MovieHeaderData[]>();
+export default function TrendingMovies({ searchType }: { searchType: SearchType }) {
+    const [movies, setMovies] = useState<MovieHeaderData[]>([]);
+    const [filteredMovies, setFilteredMovies] = useState<MovieHeaderData[]>();
 
     useEffect(() => {
-        axios({
-            method: 'get',
-            url: 'https://at.usermd.net/api/movies',
-        }).then(
-            (response) => {
-                setMovies(response.data)
-            }
-        ).catch(
-            (e) => {
-                console.log(e);
-            }
-        );
-    });
+        getMovieCollection().then((movies) => {
+            setMovies(movies);
+            setFilteredMovies(movies);
+        })
+    }, []);
+
+    useEffect(() => {
+        filterMovies(searchType, movies)
+            .then((value) => {
+                setFilteredMovies(value);
+            });
+    }, [searchType])
 
     return (
         <div className='movieGroup'>
             {
-                movies ?
-                    movies.map((movieData, index) => <Movie key={index} prop={movieData} />)
+                filteredMovies ?
+                    filteredMovies.map((movieData, index) => <Movie key={index} prop={movieData} />)
                     : null
             }
         </div>

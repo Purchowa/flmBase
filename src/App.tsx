@@ -3,7 +3,6 @@ import './styles/theme.css';
 import './styles/style.css';
 import { Container } from 'react-bootstrap';
 import {
-  createBrowserRouter,
   BrowserRouter,
   Routes,
   Route,

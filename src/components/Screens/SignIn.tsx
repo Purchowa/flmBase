@@ -2,14 +2,15 @@ import { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
-import axios from 'axios';
 import NavBar from "../NavBar/NavBar";
 import { LoginForm } from '../Types/UserDataTypes';
 import { homePath, registerPath } from '../../strings/AppPaths';
+import { authorizeUser } from '../../api/userDataApi';
 
 export default function SignIn() {
     const [validated, setValidated] = useState(false);
     const [falseCredintials, setFalseCredintials] = useState(false);
+    const [loginErrorMsg, setLoginErrorMsg] = useState('');
     const navigate = useNavigate();
 
     const refreshPage = () => {
@@ -27,21 +28,13 @@ export default function SignIn() {
                 password: event.target.password.value
             };
 
-            axios({
-                method: 'post',
-                url: 'https://at.usermd.net/api/user/auth',
-                data: loginData
-            }).then(
-                (response) => {
-                    localStorage.setItem('token', response.data.token);
-                    navigate(homePath);
-                    refreshPage();
-                }
-            ).catch(
-                () => {
-                    setFalseCredintials(true);
-                }
-            );
+            authorizeUser(loginData).then(() => {
+                navigate(homePath);
+                refreshPage();
+            }).catch((error: Error) => {
+                setLoginErrorMsg(error.message);
+                setFalseCredintials(true);
+            })
         }
 
         event.preventDefault();
@@ -70,7 +63,7 @@ export default function SignIn() {
                     </Row>
                     {falseCredintials ? <Row className="m-3 justify-content-center">
                         <Col xs='auto'>
-                            <p className='text-danger'>Błędny login lub hasło</p>
+                            <p className='text-danger'>{loginErrorMsg}</p>
                         </Col>
                     </Row> : null}
 
